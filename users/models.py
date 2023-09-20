@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 
 
@@ -15,12 +14,12 @@ class Employee(models.Model):
 
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    contact_no = models.IntegerField(max_length=10, validators=[
+    contact_no = models.IntegerField(validators=[
         RegexValidator(
             regex=mobile_number_regex,
             message="Mobile number must be exactly 10 digits.",
         ),
-    ])
+    ], blank=True, null=True)
     date_of_birth = models.DateField()
     role = models.CharField(max_length=50, choices=USER_ROLES)
     department = models.CharField(max_length=50, null=True, blank=True)
